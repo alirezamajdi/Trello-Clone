@@ -1,0 +1,38 @@
+.card {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  border-radius: 0.2rem;
+  background-color: #fff;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  transition: background-color 0.2s ease-in;
+
+  &:hover {
+    background-color: #f4f5f7;
+  }
+
+  &__content {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: rgb(64, 66, 75);
+    word-break: break-word;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.2rem;
+    background-color: rgb(223, 225, 230);
+    color: rgb(23, 43, 77);
+    transition: background-color 0.2s ease-in;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(200, 203, 210);
+    }
+  }
+}

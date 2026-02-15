@@ -1,0 +1,39 @@
+.button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.75rem;
+
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in, box-shadow 0.2s ease-in;
+
+  &:last-child {
+    margin-right: 0; // remove margin for the last button in a group
+  }
+
+  &:hover {
+    filter: brightness(0.9); // simple hover effect
+  }
+
+  &--danger {
+    background-color: rgb(207, 81, 61);
+    box-shadow: 0 1px 0 rgb(110, 47, 26);
+
+    &:hover {
+      background-color: rgb(180, 70, 55);
+    }
+  }
+
+  &--success {
+    background-color: rgb(90, 172, 68);
+    box-shadow: 0 1px 0 rgb(63, 111, 33);
+
+    &:hover {
+      background-color: rgb(75, 150, 60);
+    }
+  }
+}
