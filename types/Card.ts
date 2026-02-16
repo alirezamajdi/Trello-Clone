@@ -1,6 +1,6 @@
-interface CardComment {
+interface ICardComment {
   date: string;
   comment: string;
 }
 
-type Comments = CardComment[];
+type IComments = ICardComment[];

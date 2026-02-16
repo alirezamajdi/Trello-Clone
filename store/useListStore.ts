@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface ListState {
-  lists: Lists;
+  lists: ILists;
   setLists: (arg: any) => void;
 }
 

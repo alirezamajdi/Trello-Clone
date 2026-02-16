@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface CardState {
-  comments: Comments;
+  comments: IComments;
   showComments: { cardId: number; listId: number } | null;
   onShowComments: (
     arg: {

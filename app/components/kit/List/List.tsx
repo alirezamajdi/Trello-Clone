@@ -21,7 +21,7 @@ const Action = dynamic(() => import("./Action"), {
   ssr: false,
 });
 
-interface IProps extends List {
+interface IProps extends IList {
   dragHandleProps?: any; // from Board
 }
 

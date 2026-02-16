@@ -32,3 +32,6 @@
   ],
   "exclude": ["node_modules"]
 }
+
+//newLists.forEach((list, idx) => (list.level = idx))
+// .sort((a, b) => a.level - b.level)

@@ -14,13 +14,14 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useListStore } from "@/store/useListStore";
+import { useLists } from "@/hooks/useLists";
 
 const CommentsModal = dynamic(
   () => import("@/app/components/kit/Modals/comments/CommentsModal"),
   { ssr: false },
 );
 
-function SortableList(props: List) {
+function SortableList(props: IList) {
   const { setNodeRef, attributes, listeners, transform, transition } =
     useSortable({ id: props?.id });
 
@@ -39,6 +40,7 @@ function SortableList(props: List) {
 const Board = () => {
   const { showComments } = useCardStore();
   const { lists, setLists } = useListStore();
+  const { setAllLists } = useLists();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -49,8 +51,10 @@ const Board = () => {
     const newIndex = lists.findIndex((l) => l.id === over.id);
 
     const newLists = arrayMove(lists, oldIndex, newIndex);
-
+    newLists.forEach((list, idx) => (list.level = idx));
+    console.log("ccc", newLists);
     setLists(newLists);
+    setAllLists(newLists);
   };
 
   return (
@@ -69,9 +73,11 @@ const Board = () => {
               items={lists.map((l) => l.id)}
               strategy={horizontalListSortingStrategy}
             >
-              {lists.map((list) => (
-                <SortableList key={list.id} {...list} />
-              ))}
+              {lists
+                .sort((a, b) => a.level - b.level)
+                .map((list) => (
+                  <SortableList key={list.id} {...list} />
+                ))}
             </SortableContext>
             <AddList />
           </div>

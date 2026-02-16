@@ -3,11 +3,6 @@ import { useListStore } from "@/store/useListStore";
 import { DB_NAME } from "@/utils/constants";
 import { useEffect, useState } from "react";
 
-export interface IList {
-  id: number;
-  title: string;
-}
-
 const STORE_NAME = "lists";
 const DB_VERSION = 2; // IMPORTANT: increase version
 
@@ -50,7 +45,7 @@ export const useLists = () => {
     const request = store.getAll();
 
     request.onsuccess = () => {
-      setLists(request.result as IList[]);
+      setLists(request.result as ILists);
     };
 
     request.onerror = () => {
@@ -64,7 +59,7 @@ export const useLists = () => {
     const transaction = db.transaction(STORE_NAME, "readwrite");
     const store = transaction.objectStore(STORE_NAME);
 
-    const request = store.add({ title, cards: [] });
+    const request = store.add({ title, cards: [], level: lists.length + 1 });
 
     request.onerror = () => {
       console.error("Add failed:", request.error);
@@ -94,8 +89,20 @@ export const useLists = () => {
     };
   };
 
+  const setAllLists = (newLists: ILists) => {
+    if (!db) return;
+
+    const transaction = db.transaction(STORE_NAME, "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+
+    store.clear().onsuccess = () => {
+      newLists.forEach((list) => store.add(list));
+    };
+  };
+
   return {
     addList,
     removeList,
+    setAllLists,
   };
 };

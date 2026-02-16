@@ -1,7 +1,8 @@
-interface List {
+interface IList {
   title: string;
   cards: [];
   id: number;
+  level:number
 }
 
-type Lists = List[];
+type ILists = IList[];
