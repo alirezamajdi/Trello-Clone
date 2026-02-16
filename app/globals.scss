@@ -37,11 +37,13 @@ p {
 .relative {
   position: relative;
 }
+
 button {
   border: none;
   outline: none;
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
 }
 ul {
   margin: 0px;
@@ -49,15 +51,6 @@ ul {
   list-style: none;
 }
 
-.btn {
-  padding: 0.3rem 0.6rem;
-  border-radius: 0.2rem;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in;
-}
-
 .capitalize {
   text-transform: capitalize;
 }
-

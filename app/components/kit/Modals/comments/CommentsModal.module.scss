@@ -1,0 +1,29 @@
+.commentsModal {
+  &__empty {
+    list-style: none;
+    padding: 0.5rem;
+    background-color: rgb(244, 245, 247);
+    border-radius: 0.2rem;
+  }
+  textarea {
+    border: 1px solid rgb(223, 225, 230);
+    margin-top: 0.75rem;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.comment {
+  list-style: none;
+  padding: 0.5rem;
+  background-color: rgb(244, 245, 247);
+  border-radius: 0.2rem;
+  &__header {
+    margin-bottom: 0.4rem;
+    font-size: 0.7rem;
+    color: rgb(94, 108, 132);
+  }
+}

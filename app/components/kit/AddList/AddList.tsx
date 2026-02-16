@@ -6,6 +6,7 @@ import Button from "@/app/components/ui/Button/Button";
 import Close from "@/assets/icons/Close";
 
 interface IProps {}
+
 const AddList: FC<IProps> = (props) => {
   const [addList, setAddList] = useState(false);
   const handleAdd = () => {};
