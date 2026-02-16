@@ -13,16 +13,16 @@ import {
   arrayMove,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { useListStore } from "@/store/useListStore";
 
 const CommentsModal = dynamic(
   () => import("@/app/components/kit/Modals/comments/CommentsModal"),
   { ssr: false },
 );
 
-function SortableList({ id, title }: { id: string; title: string }) {
+function SortableList(props: List) {
   const { setNodeRef, attributes, listeners, transform, transition } =
-    useSortable({ id });
+    useSortable({ id: props?.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -31,36 +31,26 @@ function SortableList({ id, title }: { id: string; title: string }) {
 
   return (
     <div ref={setNodeRef} style={style}>
-      <List
-        id={id}
-        title={title}
-        dragHandleProps={{ ...attributes, ...listeners }}
-      />
+      <List {...props} dragHandleProps={{ ...attributes, ...listeners }} />
     </div>
   );
 }
 
 const Board = () => {
   const { showComments } = useCardStore();
-
-  // Replace static array with state
-  const [lists, setLists] = useState([
-    { id: "1", title: "Todo" },
-    { id: "2", title: "In Progress" },
-    { id: "3", title: "Review" },
-    { id: "4", title: "Done" },
-  ]);
+  const { lists, setLists } = useListStore();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over || active.id === over.id) return;
 
-    setLists((prev) => {
-      const oldIndex = prev.findIndex((l) => l.id === active.id);
-      const newIndex = prev.findIndex((l) => l.id === over.id);
-      return arrayMove(prev, oldIndex, newIndex);
-    });
+    const oldIndex = lists.findIndex((l) => l.id === active.id);
+    const newIndex = lists.findIndex((l) => l.id === over.id);
+
+    const newLists = arrayMove(lists, oldIndex, newIndex);
+
+    setLists(newLists);
   };
 
   return (
@@ -80,7 +70,7 @@ const Board = () => {
               strategy={horizontalListSortingStrategy}
             >
               {lists.map((list) => (
-                <SortableList key={list.id} id={list.id} title={list.title} />
+                <SortableList key={list.id} {...list} />
               ))}
             </SortableContext>
             <AddList />

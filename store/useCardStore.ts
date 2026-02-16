@@ -2,11 +2,11 @@ import { create } from "zustand";
 
 interface CardState {
   comments: Comments;
-  showComments: { cardId: string; listId: string } | null;
+  showComments: { cardId: number; listId: number } | null;
   onShowComments: (
     arg: {
-      cardId: string;
-      listId: string;
+      cardId: number;
+      listId: number;
     } | null,
   ) => void;
   onComments: () => void;
@@ -17,7 +17,6 @@ export const useCardStore = create<CardState>((set) => ({
   showComments: null,
 
   onShowComments: (arg) => {
-    console.log("ccc", arg);
     if (!arg) {
       set((state) => ({
         showComments: null,

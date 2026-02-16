@@ -4,24 +4,37 @@ import styles from "./AddList.module.scss";
 import Input from "@/app/components/ui/Input/Input";
 import Button from "@/app/components/ui/Button/Button";
 import Close from "@/assets/icons/Close";
+import { useLists } from "@/hooks/useLists";
 
-interface IProps {}
+const AddList: FC = () => {
+  const [addListOpen, setAddListOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const { addList } = useLists();
 
-const AddList: FC<IProps> = (props) => {
-  const [addList, setAddList] = useState(false);
-  const handleAdd = () => {};
+  const handleAdd = () => {
+    addList(title);
+    setTitle("");
+    setAddListOpen(false);
+  };
+
   return (
     <div className={styles["addList"]}>
-      {addList ? (
+      {addListOpen ? (
         <div className={styles["addList__form"]}>
-          <Input placeholder="Enter a list title..." />
+          <Input
+            placeholder="Enter a list title..."
+            value={title}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setTitle(e.target.value)
+            }
+          />
           <div>
             <Button onClick={handleAdd} variant="success">
               Add list
             </Button>
             <button
               className={styles["addList__form-close"]}
-              onClick={() => setAddList(false)}
+              onClick={() => setAddListOpen(false)}
             >
               <Close width="17" height="17" />
             </button>
@@ -30,7 +43,7 @@ const AddList: FC<IProps> = (props) => {
       ) : (
         <button
           className={styles["addList__button"]}
-          onClick={() => setAddList(true)}
+          onClick={() => setAddListOpen(true)}
         >
           + Add another list
         </button>

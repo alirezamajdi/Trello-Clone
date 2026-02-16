@@ -5,8 +5,8 @@ import { useCardStore } from "@/store/useCardStore";
 interface IProps {
   content: string;
   comments: Comments;
-  id: string;
-  listId: string;
+  id: number;
+  listId: number;
 }
 const Card: FC<IProps> = (props) => {
   const { comments, content, id, listId } = props;

@@ -21,14 +21,12 @@ const Action = dynamic(() => import("./Action"), {
   ssr: false,
 });
 
-interface IProps {
-  title: string;
-  id: string;
+interface IProps extends List {
   dragHandleProps?: any; // from Board
 }
 
 interface CardItem {
-  id: string;
+  id: number;
   content: string;
 }
 
@@ -37,8 +35,8 @@ function SortableCard({
   listId,
   content,
 }: {
-  id: string;
-  listId: string;
+  id: number;
+  listId: number;
   content: string;
 }) {
   const {
@@ -75,8 +73,8 @@ const List: FC<IProps> = ({ title, id, dragHandleProps }) => {
 
   // Cards state
   const [cards, setCards] = useState<CardItem[]>([
-    { id: `${id}-1`, content: "Create interview Kanban" },
-    { id: `${id}-2`, content: "Prepare questions" },
+    { id: 1, content: "Create interview Kanban" },
+    { id: 2, content: "Prepare questions" },
   ]);
 
   useOnClickOutside(actionRef, () => setOpenAction(false));
@@ -100,11 +98,14 @@ const List: FC<IProps> = ({ title, id, dragHandleProps }) => {
         <h2 className={styles["list__title"]}>{title}</h2>
 
         <div ref={actionRef} className="relative">
-          <button onClick={() => setOpenAction(true)}>
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={() => setOpenAction(true)}
+          >
             <Ellipsis width="20" height="20" />
           </button>
 
-          {openAction && <Action setOpenAction={setOpenAction} />}
+          {openAction && <Action id={id} setOpenAction={setOpenAction} />}
         </div>
       </div>
 

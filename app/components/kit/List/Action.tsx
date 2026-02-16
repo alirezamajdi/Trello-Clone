@@ -4,25 +4,35 @@ import Close from "@/assets/icons/Close";
 import Left from "@/assets/icons/Left";
 import styles from "./List.module.scss";
 import Button from "@/app/components/ui/Button/Button";
+import { useLists } from "@/hooks/useLists";
 
 interface IProps {
   setOpenAction: Dispatch<SetStateAction<boolean>>;
+  id: number;
 }
 const Action: FC<IProps> = (props) => {
-  const { setOpenAction } = props;
+  const { setOpenAction, id } = props;
   const [actionState, setActionState] = useState<
     "delete-all-cards" | "delete-list" | null
   >(null);
+  const { removeList } = useLists();
+
   return (
     <div className={styles["list__action"]}>
       <div className={styles["list__action-header"]}>
-        <button onClick={() => setActionState(null)}>
+        <button
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={() => setActionState(null)}
+        >
           {actionState && <Left width="20" height="20" fill="#6b778c" />}
         </button>
         <h3>
           {actionState ? actionState.split("-").join(" ") : " List Actions"}
         </h3>
-        <button onClick={() => setOpenAction(false)}>
+        <button
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={() => setOpenAction(false)}
+        >
           <Close width="18" height="18" fill="#6b778c" />
         </button>
       </div>
@@ -35,7 +45,11 @@ const Action: FC<IProps> = (props) => {
                   All actions will be removed from the activity feed and you
                   won’t be able to re-open the list. There is no undo.
                 </p>
-                <Button onClick={() => {}} variant="danger">
+                <Button
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onClick={() => removeList(id)}
+                  variant="danger"
+                >
                   Delete list
                 </Button>
               </>
@@ -45,7 +59,11 @@ const Action: FC<IProps> = (props) => {
                 <p>
                   This will remove all the cards in this list from the board.
                 </p>
-                <Button onClick={() => {}} variant="danger">
+                <Button
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onClick={() => {}}
+                  variant="danger"
+                >
                   Delete all
                 </Button>
               </>
@@ -56,6 +74,7 @@ const Action: FC<IProps> = (props) => {
           <ul>
             <li>
               <button
+                onPointerDown={(e) => e.stopPropagation()}
                 onClick={() => setActionState("delete-list")}
                 className={styles["list__action-item"]}
               >
@@ -64,6 +83,7 @@ const Action: FC<IProps> = (props) => {
             </li>
             <li>
               <button
+                onPointerDown={(e) => e.stopPropagation()}
                 onClick={() => setActionState("delete-all-cards")}
                 className={styles["list__action-item"]}
               >
