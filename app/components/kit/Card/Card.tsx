@@ -4,7 +4,7 @@ import { useCardStore } from "@/store/useCardStore";
 
 interface IProps {
   content: string;
-  comments: IComments;
+  comments: IComment[];
   id: number;
   listId: number;
 }

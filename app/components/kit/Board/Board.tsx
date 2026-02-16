@@ -52,7 +52,7 @@ const Board = () => {
 
     const newLists = arrayMove(lists, oldIndex, newIndex);
     newLists.forEach((list, idx) => (list.level = idx));
-    console.log("ccc", newLists);
+    
     setLists(newLists);
     setAllLists(newLists);
   };

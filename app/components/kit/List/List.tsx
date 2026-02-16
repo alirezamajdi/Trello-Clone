@@ -16,6 +16,8 @@ import {
   arrayMove,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useListStore } from "@/store/useListStore";
+import { useLists } from "@/hooks/useLists";
 
 const Action = dynamic(() => import("./Action"), {
   ssr: false,
@@ -33,11 +35,13 @@ interface CardItem {
 function SortableCard({
   id,
   listId,
+  comments,
   content,
 }: {
   id: number;
   listId: number;
   content: string;
+  comments: IComment[];
 }) {
   const {
     setNodeRef,
@@ -56,26 +60,17 @@ function SortableCard({
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card
-        listId={listId}
-        id={id}
-        content={content}
-        comments={[{ date: "", comment: "" }]}
-      />
+      <Card listId={listId} id={id} content={content} comments={comments} />
     </div>
   );
 }
 
-const List: FC<IProps> = ({ title, id, dragHandleProps }) => {
+const List: FC<IProps> = ({ title, id, dragHandleProps, cards }) => {
   const actionRef = useRef(null);
   const [openAction, setOpenAction] = useState(false);
   const [openAddCard, setOpenAddCard] = useState(false);
-
-  // Cards state
-  const [cards, setCards] = useState<CardItem[]>([
-    { id: 1, content: "Create interview Kanban" },
-    { id: 2, content: "Prepare questions" },
-  ]);
+  const { lists, setLists } = useListStore();
+  const { setAllLists } = useLists();
 
   useOnClickOutside(actionRef, () => setOpenAction(false));
 
@@ -83,12 +78,23 @@ const List: FC<IProps> = ({ title, id, dragHandleProps }) => {
     const { active, over } = event;
 
     if (!over || active.id === over.id) return;
+    const selectedCard = lists.find((item) => item.id == id);
+    const oldIndex = selectedCard?.cards?.findIndex((l) => l.id === active.id);
+    const newIndex = selectedCard?.cards?.findIndex((l) => l.id === over.id);
 
-    setCards((prev) => {
-      const oldIndex = prev.findIndex((c) => c.id === active.id);
-      const newIndex = prev.findIndex((c) => c.id === over.id);
-      return arrayMove(prev, oldIndex, newIndex);
+    const newCards = arrayMove(selectedCard?.cards!, oldIndex!, newIndex!);
+    newCards.forEach((list, idx) => (list.level = idx));
+
+    const newLists = lists?.map((item) => {
+      if (item.id == id) {
+        return { ...item, cards: newCards };
+      } else {
+        return item;
+      }
     });
+
+    setLists(newLists);
+    setAllLists(newLists);
   };
 
   return (
@@ -121,7 +127,8 @@ const List: FC<IProps> = ({ title, id, dragHandleProps }) => {
                 key={card.id}
                 id={card.id}
                 listId={id}
-                content={card.content}
+                comments={card.comments}
+                content={card.title}
               />
             ))}
           </div>
@@ -130,7 +137,7 @@ const List: FC<IProps> = ({ title, id, dragHandleProps }) => {
 
       {/* 🔹 Add Card */}
       {openAddCard ? (
-        <AddCard setOpenAddCard={setOpenAddCard} />
+        <AddCard listId={id} setOpenAddCard={setOpenAddCard} />
       ) : (
         <button
           onClick={() => setOpenAddCard(true)}
