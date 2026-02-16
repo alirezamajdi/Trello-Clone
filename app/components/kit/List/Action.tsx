@@ -5,6 +5,7 @@ import Left from "@/assets/icons/Left";
 import styles from "./List.module.scss";
 import Button from "@/app/components/ui/Button/Button";
 import { useLists } from "@/hooks/useLists";
+import { useListStore } from "@/store/useListStore";
 
 interface IProps {
   setOpenAction: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +16,23 @@ const Action: FC<IProps> = (props) => {
   const [actionState, setActionState] = useState<
     "delete-all-cards" | "delete-list" | null
   >(null);
-  const { removeList } = useLists();
+  const { removeList, setAllLists } = useLists();
+  const { lists, setLists } = useListStore();
+
+  const handleDeleteAllCards = () => {
+    const newLists = lists.map((list) => {
+      if (list.id !== id) return list;
+
+      return {
+        ...list,
+        cards: [],
+      };
+    });
+    setLists(newLists);
+    setAllLists(newLists);
+    setActionState(null);
+    setOpenAction(false);
+  };
 
   return (
     <div className={styles["list__action"]}>
@@ -61,7 +78,7 @@ const Action: FC<IProps> = (props) => {
                 </p>
                 <Button
                   onPointerDown={(e) => e.stopPropagation()}
-                  onClick={() => {}}
+                  onClick={handleDeleteAllCards}
                   variant="danger"
                 >
                   Delete all
