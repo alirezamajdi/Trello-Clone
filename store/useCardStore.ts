@@ -17,6 +17,7 @@ export const useCardStore = create<CardState>((set) => ({
   showComments: null,
 
   onShowComments: (arg) => {
+    console.log("ccc", arg);
     if (!arg) {
       set((state) => ({
         showComments: null,
