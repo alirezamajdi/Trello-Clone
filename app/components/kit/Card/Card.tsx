@@ -17,6 +17,7 @@ const Card: FC<IProps> = (props) => {
       <h3 className={styles["card__content"]}>{content}</h3>
       <div className={styles["card__footer"]}>
         <button
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={() => onShowComments({ listId: listId, cardId: id })}
           className={styles["card__button"]}
         >
