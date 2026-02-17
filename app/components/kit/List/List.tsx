@@ -5,23 +5,24 @@ import styles from "./List.module.scss";
 import ListHeader from "./ListHeader";
 import ListContent from "./ListContent";
 import AddCard from "../Shared/AddCard/AddCard";
+import { useListStore } from "@/store/useListStore";
 interface Props extends IList {
   dragHandleProps?: any;
 }
 
 const List: FC<Props> = ({ id, title, cards, dragHandleProps }) => {
-  const [openAddCard, setOpenAddCard] = useState(false);
-  
+  const { activeAddCard, onActiveAddCard } = useListStore();
+
   return (
     <div className={styles["list"]}>
       <ListHeader id={id} title={title} dragHandleProps={dragHandleProps} />
       <ListContent cards={cards} listId={id} />
 
-      {openAddCard ? (
-        <AddCard listId={id} setOpenAddCard={setOpenAddCard} />
+      {activeAddCard === +id ? (
+        <AddCard listId={id} />
       ) : (
         <button
-          onClick={() => setOpenAddCard(true)}
+          onClick={() => onActiveAddCard(id)}
           className={styles["list__footer"]}
         >
           + Add another card
@@ -32,4 +33,3 @@ const List: FC<Props> = ({ id, title, cards, dragHandleProps }) => {
 };
 
 export default List;
-

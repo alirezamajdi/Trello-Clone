@@ -4,12 +4,13 @@ import Textarea from "@/app/components/ui/Textarea/Textarea";
 import Button from "@/app/components/ui/Button/Button";
 import Close from "@/assets/icons/Close";
 import { useAddCard } from "@/hooks/useAddCard";
+import { useListStore } from "@/store/useListStore";
 interface IProps {
-  setOpenAddCard: Dispatch<SetStateAction<boolean>>;
   listId: number;
 }
 const AddCard: FC<IProps> = (props) => {
-  const { setOpenAddCard, listId } = props;
+  const { listId } = props;
+  const { onActiveAddCard } = useListStore();
   const { cardTitle, setCardTitle, handleAdd } = useAddCard(listId);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -33,7 +34,7 @@ const AddCard: FC<IProps> = (props) => {
         </Button>
         <button
           className={styles["addCard-close"]}
-          onClick={() => setOpenAddCard(false)}
+          onClick={() => onActiveAddCard(null)}
         >
           <Close width="17" height="17" />
         </button>
