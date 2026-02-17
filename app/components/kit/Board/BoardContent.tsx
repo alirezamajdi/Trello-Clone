@@ -15,14 +15,17 @@ import {
 } from "@dnd-kit/core";
 import { useListReorder } from "@/hooks/useListReorder";
 import List from "../List/List";
+import { useAppSensors } from "@/hooks/useAppSensors";
 
 const BoardContent = () => {
   const { lists } = useListStore();
+  const { sensors } = useAppSensors();
   const { activeId, handleDragStart, handleDragEnd } = useListReorder();
   const activeList = activeId ? lists.find((l) => l.id === +activeId) : null;
 
   return (
     <DndContext
+      sensors={sensors}
       collisionDetection={closestCenter}
       measuring={{
         droppable: {
@@ -45,11 +48,7 @@ const BoardContent = () => {
         </SortableContext>
         <AddList />
       </div>
-      <DragOverlay>
-        {activeList ? (
-            <List {...activeList} />
-        ) : null}
-      </DragOverlay>
+      <DragOverlay>{activeList ? <List {...activeList} /> : null}</DragOverlay>
     </DndContext>
   );
 };

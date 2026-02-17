@@ -16,6 +16,7 @@ import { useListStore } from "@/store/useListStore";
 import { useBoardStorage } from "@/hooks/useBoardStorage";
 import { useCardReorder } from "@/hooks/useCardReorder";
 import Card from "@/app/components/kit/Card/Card";
+import { useAppSensors } from "@/hooks/useAppSensors";
 
 interface Props {
   cards: ICard[];
@@ -25,6 +26,7 @@ interface Props {
 export default function ListContent({ cards, listId }: Props) {
   const { lists, setLists } = useListStore();
   const { setAllLists } = useBoardStorage();
+  const { sensors } = useAppSensors();
   const { handleDragEnd, handleDragStart, activeId } = useCardReorder({
     listId: listId,
     lists,
@@ -41,6 +43,7 @@ export default function ListContent({ cards, listId }: Props) {
 
   return (
     <DndContext
+      sensors={sensors}
       collisionDetection={closestCenter}
       measuring={{
         droppable: {
