@@ -1,13 +1,19 @@
+import { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
+import { useState } from "react";
 import { useListStore } from "@/store/useListStore";
 import { useLists } from "./useLists";
-import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
-export const useCardReorder = () => {
+export const useListReorder = () => {
+  const [activeId, setActiveId] = useState<string | null>(null);
   const { lists, setLists } = useListStore();
   const { setAllLists } = useLists();
 
-  const reorderLists = (event: DragEndEvent) => {
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(String(event.active.id));
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
@@ -21,7 +27,8 @@ export const useCardReorder = () => {
 
     setLists(newLists);
     setAllLists(newLists);
+    setActiveId(null);
   };
 
-  return { reorderLists };
+  return { activeId, handleDragStart, handleDragEnd };
 };

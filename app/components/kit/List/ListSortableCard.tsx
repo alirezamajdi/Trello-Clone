@@ -26,11 +26,12 @@ function SortableCard({
     transform: CSS.Transform.toString(transform),
     transition,
     zIndex: isDragging ? 1000 : "auto",
+    opacity: isDragging ? 0 : 1,
   };
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card listId={listId} id={id} content={title} comments={comments} />
+      <Card listId={listId} id={id} title={title} comments={comments} />
     </div>
   );
 }

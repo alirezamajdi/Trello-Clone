@@ -1,5 +1,6 @@
 import { arrayMove } from "@dnd-kit/sortable";
-import { DragEndEvent } from "@dnd-kit/core";
+import { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
+import { useState } from "react";
 
 interface Params {
   listId: number;
@@ -8,7 +9,11 @@ interface Params {
 }
 
 export function useCardReorder({ listId, lists, onUpdate }: Params) {
-  
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(String(event.active.id));
+  };
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -31,9 +36,9 @@ export function useCardReorder({ listId, lists, onUpdate }: Params) {
     const updatedLists = lists.map((l) =>
       l.id === listId ? { ...l, cards: reordered } : l,
     );
-
+    setActiveId(null);
     onUpdate(updatedLists);
   }
 
-  return { handleDragEnd };
+  return { handleDragEnd, handleDragStart, activeId };
 }

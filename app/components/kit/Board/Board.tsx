@@ -9,9 +9,8 @@ import {
   DragOverlay,
   MeasuringStrategy,
 } from "@dnd-kit/core";
-
 import { useListStore } from "@/store/useListStore";
-import { useBoardDnd } from "@/hooks/useBoardDnd";
+import { useListReorder } from "@/hooks/useListReorder";
 import Lists from "./BoardLists";
 import BoardHeader from "./BoardHeader";
 
@@ -23,7 +22,7 @@ const CommentsModal = dynamic(
 const Board = () => {
   const { showComments } = useCardStore();
   const { lists } = useListStore();
-  const { activeId, handleDragStart, handleDragEnd } = useBoardDnd();
+  const { activeId, handleDragStart, handleDragEnd } = useListReorder();
 
   const activeList = activeId ? lists.find((l) => l.id === +activeId) : null;
 
@@ -60,3 +59,4 @@ const Board = () => {
 };
 
 export default Board;
+
