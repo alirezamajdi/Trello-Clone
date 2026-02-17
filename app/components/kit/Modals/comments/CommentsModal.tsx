@@ -15,7 +15,7 @@ const CommentsModal = () => {
   const { setAllLists } = useLists();
 
   const handleAddComment = () => {
-    if (!showComments) return;
+    if (!showComments || !comment) return;
 
     const newLists = lists.map((list) => {
       if (list.id !== showComments.listId) return list;

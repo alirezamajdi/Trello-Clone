@@ -16,6 +16,7 @@ const AddCard: FC<IProps> = (props) => {
   const { setAllLists } = useLists();
 
   const handleAdd = () => {
+    if (!cardTitle) return;
     let selectedList = lists.find((item) => item?.id == listId);
     let otherLists = lists.filter((item) => item.id !== listId);
 
