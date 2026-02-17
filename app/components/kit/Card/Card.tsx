@@ -27,3 +27,4 @@ const Card: FC<IProps> = (props) => {
 };
 
 export default Card;
+

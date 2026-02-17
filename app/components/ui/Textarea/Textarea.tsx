@@ -1,10 +1,6 @@
 import React, { forwardRef } from "react";
 import styles from "./Textarea.module.scss";
 
-interface IProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-}
-
 const Textarea = forwardRef<
   HTMLTextAreaElement,
   React.TextareaHTMLAttributes<HTMLTextAreaElement>

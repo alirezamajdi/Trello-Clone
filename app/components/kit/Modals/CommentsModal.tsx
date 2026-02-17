@@ -3,45 +3,14 @@ import Modal from "@/app/components/ui/Modal/Modal";
 import styles from "./CommentsModal.module.scss";
 import Textarea from "@/app/components/ui/Textarea/Textarea";
 import Button from "@/app/components/ui/Button/Button";
-import { useState } from "react";
 import { useListStore } from "@/store/useListStore";
-import { useBoardStorage } from "@/hooks/useBoardStorage";
 import { toLocaleString } from "@/utils/helper";
+import { useAddComment } from "@/hooks/useAddComment";
 
 const CommentsModal = () => {
   const { showComments, onShowComments } = useCardStore();
-  const [comment, setComment] = useState("");
-  const { lists, setLists } = useListStore();
-  const { setAllLists } = useBoardStorage();
-
-  const handleAddComment = () => {
-    if (!showComments || !comment) return;
-
-    const newLists = lists.map((list) => {
-      if (list.id !== showComments.listId) return list;
-
-      return {
-        ...list,
-        cards: list.cards.map((card) => {
-          if (card.id !== showComments.cardId) return card;
-
-          return {
-            ...card,
-            comments: [
-              ...card.comments,
-              {
-                title: comment,
-                date: new Date().toISOString(),
-              },
-            ],
-          };
-        }),
-      };
-    });
-    setLists(newLists);
-    setAllLists(newLists);
-    setComment("");
-  };
+  const { lists } = useListStore();
+  const { handleAddComment, comment, setComment } = useAddComment();
 
   const selectedList = lists.find((item) => item.id == showComments?.listId);
   const selectedCard = selectedList?.cards.find(

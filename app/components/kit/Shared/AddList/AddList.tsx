@@ -1,22 +1,14 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 import styles from "./AddList.module.scss";
 import Input from "@/app/components/ui/Input/Input";
 import Button from "@/app/components/ui/Button/Button";
 import Close from "@/assets/icons/Close";
-import { useBoardStorage } from "@/hooks/useBoardStorage";
+import { useAddList } from "@/hooks/useAddList";
 
 const AddList: FC = () => {
-  const [addListOpen, setAddListOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const { addList } = useBoardStorage();
-
-  const handleAdd = () => {
-    if (!title) return;
-    addList(title);
-    setTitle("");
-    setAddListOpen(false);
-  };
+  const { setAddListOpen, addListOpen, handleAdd, title, setTitle } =
+    useAddList();
 
   return (
     <div className={styles["addList"]}>
