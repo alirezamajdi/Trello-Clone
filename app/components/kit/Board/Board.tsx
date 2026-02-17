@@ -13,6 +13,7 @@ import {
 import { useListStore } from "@/store/useListStore";
 import { useBoardDnd } from "@/hooks/useBoardDnd";
 import Lists from "./BoardLists";
+import BoardHeader from "./BoardHeader";
 
 const CommentsModal = dynamic(
   () => import("@/app/components/kit/Modals/CommentsModal"),
@@ -29,9 +30,7 @@ const Board = () => {
   return (
     <>
       <div className={styles.board}>
-        <div className={styles.board__header}>
-          <h1 className={styles.board__title}>Demo Board</h1>
-        </div>
+        <BoardHeader />
 
         <DndContext
           collisionDetection={closestCenter}
