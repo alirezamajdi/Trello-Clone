@@ -22,7 +22,7 @@ interface Props {
   listId: number;
 }
 
-export default function ListCards({ cards, listId }: Props) {
+export default function ListContent({ cards, listId }: Props) {
   const { lists, setLists } = useListStore();
   const { setAllLists } = useLists();
   const { handleDragEnd, handleDragStart, activeId } = useCardReorder({
