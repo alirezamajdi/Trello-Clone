@@ -4,14 +4,15 @@ import styles from "./AddList.module.scss";
 import Input from "@/app/components/ui/Input/Input";
 import Button from "@/app/components/ui/Button/Button";
 import Close from "@/assets/icons/Close";
-import { useLists } from "@/hooks/useLists";
+import { useBoardStorage } from "@/hooks/useBoardStorage";
 
 const AddList: FC = () => {
   const [addListOpen, setAddListOpen] = useState(false);
   const [title, setTitle] = useState("");
-  const { addList } = useLists();
+  const { addList } = useBoardStorage();
 
   const handleAdd = () => {
+    if (!title) return;
     addList(title);
     setTitle("");
     setAddListOpen(false);
@@ -24,6 +25,7 @@ const AddList: FC = () => {
           <Input
             placeholder="Enter a list title..."
             value={title}
+            autoFocus
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTitle(e.target.value)
             }

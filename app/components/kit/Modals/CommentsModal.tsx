@@ -5,14 +5,14 @@ import Textarea from "@/app/components/ui/Textarea/Textarea";
 import Button from "@/app/components/ui/Button/Button";
 import { useState } from "react";
 import { useListStore } from "@/store/useListStore";
-import { useLists } from "@/hooks/useLists";
+import { useBoardStorage } from "@/hooks/useBoardStorage";
 import { toLocaleString } from "@/utils/helper";
 
 const CommentsModal = () => {
   const { showComments, onShowComments } = useCardStore();
   const [comment, setComment] = useState("");
   const { lists, setLists } = useListStore();
-  const { setAllLists } = useLists();
+  const { setAllLists } = useBoardStorage();
 
   const handleAddComment = () => {
     if (!showComments || !comment) return;
@@ -88,7 +88,9 @@ export default CommentsModal;
 const Comment = ({ title, date }: IComment) => {
   return (
     <li className={styles["comment"]}>
-      <div className={styles["comment__header"]}>{toLocaleString(date)}</div>
+      <div className={styles["comment__header"]}>
+        You: {toLocaleString(date)}
+      </div>
       <div>{title}</div>
     </li>
   );

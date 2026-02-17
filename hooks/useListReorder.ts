@@ -1,13 +1,13 @@
 import { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 import { useState } from "react";
 import { useListStore } from "@/store/useListStore";
-import { useLists } from "./useLists";
+import { useBoardStorage } from "./useBoardStorage";
 import { arrayMove } from "@dnd-kit/sortable";
 
 export const useListReorder = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const { lists, setLists } = useListStore();
-  const { setAllLists } = useLists();
+  const { setAllLists } = useBoardStorage();
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(String(event.active.id));

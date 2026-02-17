@@ -19,7 +19,6 @@ import List from "../List/List";
 const BoardContent = () => {
   const { lists } = useListStore();
   const { activeId, handleDragStart, handleDragEnd } = useListReorder();
-
   const activeList = activeId ? lists.find((l) => l.id === +activeId) : null;
 
   return (
@@ -33,7 +32,7 @@ const BoardContent = () => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className={styles.board__lists}>
+      <div className={styles["board__lists"]}>
         <SortableContext
           items={lists.map((l) => l.id)}
           strategy={horizontalListSortingStrategy}
@@ -48,9 +47,7 @@ const BoardContent = () => {
       </div>
       <DragOverlay>
         {activeList ? (
-          <div className={styles.dragOverlay}>
             <List {...activeList} />
-          </div>
         ) : null}
       </DragOverlay>
     </DndContext>

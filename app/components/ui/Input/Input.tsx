@@ -1,10 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./Input.module.scss";
 
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-}
-const Input = ({ ...props }) => {
+const Input: FC<React.InputHTMLAttributes<HTMLInputElement>> = ({
+  ...props
+}) => {
   return <input className={styles["input"]} {...props} />;
 };
 

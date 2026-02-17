@@ -1,14 +1,21 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styles from "./Textarea.module.scss";
 
 interface IProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
 }
 
-const Input: React.FC<IProps> = ({ ...props }) => {
+const Textarea = forwardRef<
+  HTMLTextAreaElement,
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>
+>((props, ref) => {
   return (
-    <textarea className={`${styles["input"]} ${props.className}`} {...props} />
+    <textarea
+      ref={ref}
+      className={`${styles["input"]} ${props.className}`}
+      {...props}
+    />
   );
-};
+});
 
-export default Input;
+export default Textarea;

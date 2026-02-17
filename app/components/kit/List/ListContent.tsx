@@ -13,7 +13,7 @@ import {
   MeasuringStrategy,
 } from "@dnd-kit/core";
 import { useListStore } from "@/store/useListStore";
-import { useLists } from "@/hooks/useLists";
+import { useBoardStorage } from "@/hooks/useBoardStorage";
 import { useCardReorder } from "@/hooks/useCardReorder";
 import Card from "@/app/components/kit/Card/Card";
 
@@ -24,7 +24,7 @@ interface Props {
 
 export default function ListContent({ cards, listId }: Props) {
   const { lists, setLists } = useListStore();
-  const { setAllLists } = useLists();
+  const { setAllLists } = useBoardStorage();
   const { handleDragEnd, handleDragStart, activeId } = useCardReorder({
     listId: listId,
     lists,

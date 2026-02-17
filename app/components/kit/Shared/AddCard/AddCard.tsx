@@ -1,10 +1,17 @@
-import React, { FC, Dispatch, SetStateAction, useState } from "react";
+import React, {
+  FC,
+  Dispatch,
+  SetStateAction,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import styles from "./AddCard.module.scss";
 import Textarea from "@/app/components/ui/Textarea/Textarea";
 import Button from "@/app/components/ui/Button/Button";
 import Close from "@/assets/icons/Close";
 import { useListStore } from "@/store/useListStore";
-import { useLists } from "@/hooks/useLists";
+import { useBoardStorage } from "@/hooks/useBoardStorage";
 interface IProps {
   setOpenAddCard: Dispatch<SetStateAction<boolean>>;
   listId: number;
@@ -13,7 +20,14 @@ const AddCard: FC<IProps> = (props) => {
   const { setOpenAddCard, listId } = props;
   const [cardTitle, setCardTitle] = useState("");
   const { lists, setLists } = useListStore();
-  const { setAllLists } = useLists();
+  const { setAllLists } = useBoardStorage();
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (cardTitle === "") {
+      textareaRef.current?.focus();
+    }
+  }, [cardTitle]);
 
   const handleAdd = () => {
     if (!cardTitle) return;
@@ -51,6 +65,7 @@ const AddCard: FC<IProps> = (props) => {
         value={cardTitle}
         onChange={(e) => setCardTitle(e.target.value)}
         placeholder="Enter a card title..."
+        ref={textareaRef}
       />
       <div>
         <Button onClick={handleAdd} variant="success">

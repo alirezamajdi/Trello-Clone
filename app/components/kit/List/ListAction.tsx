@@ -4,7 +4,7 @@ import Close from "@/assets/icons/Close";
 import Left from "@/assets/icons/Left";
 import styles from "./List.module.scss";
 import Button from "@/app/components/ui/Button/Button";
-import { useLists } from "@/hooks/useLists";
+import { useBoardStorage } from "@/hooks/useBoardStorage";
 import { useListStore } from "@/store/useListStore";
 
 interface IProps {
@@ -17,7 +17,7 @@ const Action: FC<IProps> = (props) => {
   const [actionState, setActionState] = useState<
     "delete-all-cards" | "delete-list" | null
   >(null);
-  const { removeList, setAllLists } = useLists();
+  const { removeList, setAllLists } = useBoardStorage();
   const { lists, setLists } = useListStore();
 
   const handleDeleteAllCards = () => {

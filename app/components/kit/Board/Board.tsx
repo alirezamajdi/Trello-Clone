@@ -15,7 +15,7 @@ const Board = () => {
 
   return (
     <>
-      <div className={styles.board}>
+      <div className={styles["board"]}>
         <BoardHeader />
         <BoardContent />
       </div>
