@@ -11,6 +11,7 @@ interface IProps {
   setOpenAction: Dispatch<SetStateAction<boolean>>;
   id: number;
 }
+
 const Action: FC<IProps> = (props) => {
   const { setOpenAction, id } = props;
   const [actionState, setActionState] = useState<

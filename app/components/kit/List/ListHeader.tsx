@@ -1,18 +1,19 @@
 import Ellipsis from "@/assets/icons/Ellipsis";
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import styles from "./List.module.scss";
 
 const ListAction = dynamic(() => import("./ListAction"), { ssr: false });
 
-interface Props {
+interface IProps {
   title: string;
   id: number;
   dragHandleProps?: any;
 }
 
-export default function ListHeader({ title, id, dragHandleProps }: Props) {
+const ListHeader: FC<IProps> = (props) => {
+  const { title, id, dragHandleProps } = props;
   const actionRef = useRef(null);
   const [openAction, setOpenAction] = useState(false);
 
@@ -34,4 +35,5 @@ export default function ListHeader({ title, id, dragHandleProps }: Props) {
       </div>
     </div>
   );
-}
+};
+export default ListHeader;

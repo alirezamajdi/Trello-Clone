@@ -2,12 +2,10 @@ import { FC } from "react";
 import styles from "./Card.module.scss";
 import { useCardStore } from "@/store/useCardStore";
 
-interface IProps {
-  title: string;
-  comments: IComment[];
-  id: number;
+interface IProps extends ICard {
   listId?: number;
 }
+
 const Card: FC<IProps> = (props) => {
   const { comments, title, id, listId } = props;
   const { onShowComments } = useCardStore();

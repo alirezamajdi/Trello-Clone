@@ -18,7 +18,7 @@ import { useCardReorder } from "@/hooks/useCardReorder";
 import Card from "@/app/components/kit/Card/Card";
 
 interface Props {
-  cards: any[];
+  cards: ICard[];
   listId: number;
 }
 

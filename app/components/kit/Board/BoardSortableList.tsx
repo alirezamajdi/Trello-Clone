@@ -3,8 +3,9 @@ import styles from "./Board.module.scss";
 import List from "@/app/components/kit/List/List";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { FC } from "react";
 
-const BoardSortableList = (props: IList) => {
+const BoardSortableList: FC<IList> = (props) => {
   const {
     setNodeRef,
     attributes,
@@ -28,4 +29,3 @@ const BoardSortableList = (props: IList) => {
 };
 
 export default BoardSortableList;
-

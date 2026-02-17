@@ -1,6 +1,10 @@
-interface ICardComment {
+interface IComment {
   date: string;
-  comment: string;
+  title: string;
 }
-
-type IComments = ICardComment[];
+interface ICard {
+  id: number;
+  title: string;
+  comments: IComment[];
+  level?: number;
+}

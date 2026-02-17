@@ -1,18 +1,13 @@
 import Card from "@/app/components/kit/Card/Card";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { FC } from "react";
 
-function SortableCard({
-  id,
-  listId,
-  comments,
-  title,
-}: {
-  id: number;
+interface IProps extends ICard {
   listId: number;
-  title: string;
-  comments: IComment[];
-}) {
+}
+const SortableCard: FC<IProps> = (props) => {
+  const { id } = props;
   const {
     setNodeRef,
     attributes,
@@ -31,8 +26,8 @@ function SortableCard({
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card listId={listId} id={id} title={title} comments={comments} />
+      <Card {...props} />
     </div>
   );
-}
+};
 export default SortableCard;

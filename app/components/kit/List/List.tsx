@@ -5,8 +5,6 @@ import styles from "./List.module.scss";
 import ListHeader from "./ListHeader";
 import ListContent from "./ListContent";
 import AddCard from "../Shared/AddCard/AddCard";
-import { useCardReorder } from "@/hooks/useCardReorder";
-
 interface Props extends IList {
   dragHandleProps?: any;
 }
