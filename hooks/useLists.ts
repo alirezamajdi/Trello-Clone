@@ -4,7 +4,7 @@ import { DB_NAME } from "@/utils/constants";
 import { useEffect, useState } from "react";
 
 const STORE_NAME = "lists";
-const DB_VERSION = 2; // IMPORTANT: increase version
+const DB_VERSION = 2; 
 
 export const useLists = () => {
   const { setLists, lists } = useListStore();
